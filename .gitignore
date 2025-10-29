@@ -7,3 +7,6 @@
 
 # Backup files
 *.bak
+
+# Converted markdown file
+converted.md
