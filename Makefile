@@ -23,8 +23,6 @@ endif
 
 # Pandoc flags for Times New Roman 14pt, black text
 PANDOC_FLAGS := --standalone \
-                --toc \
-                --toc-depth=3 \
                 -V mainfont="Times New Roman" \
                 -V fontsize=14pt \
                 -V colorlinks=false \
@@ -37,7 +35,6 @@ all: $(DOCX_OUTPUT)
 # Main conversion rule
 $(DOCX_OUTPUT): $(MD_SOURCE)
 	@$(ECHO) "Converting $(MD_SOURCE) to Word format..."
-	@$(ECHO) "Using Times New Roman 14pt with black text..."
 	$(PANDOC) $(PANDOC_FLAGS) -f markdown -t docx -o $@ $<
 	@$(ECHO) "Successfully created $(DOCX_OUTPUT)"
 
