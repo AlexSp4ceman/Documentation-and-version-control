@@ -4,21 +4,13 @@
 MD_SOURCE := main.md
 DOCX_OUTPUT := article.docx
 PANDOC := pandoc
-
-# Detect OS
-ifeq ($(OS),Windows_NT)
-    DETECTED_OS := Windows
-else
-    DETECTED_OS := $(shell uname -s)
-endif
+ECHO := echo
 
 # Platform-specific commands
-ifeq ($(DETECTED_OS),Windows)
+ifeq ($(OS),Windows_NT)
     RM := del /Q
-    ECHO := echo
 else
     RM := rm -f
-    ECHO := echo
 endif
 
 # Pandoc flags for Times New Roman 14pt, black text
@@ -38,14 +30,6 @@ $(DOCX_OUTPUT): $(MD_SOURCE)
 	$(PANDOC) $(PANDOC_FLAGS) -f markdown -t docx -o $@ $<
 	@$(ECHO) "Successfully created $(DOCX_OUTPUT)"
 
-# Check if pandoc is installed
-check-pandoc:
-	@where pandoc >nul 2>nul || (\
-	 $(ECHO) "Error: pandoc is not installed." & \
-	 $(ECHO) "Please refer to README.md for installation instructions." & \
-	 exit 1)
-	@$(ECHO) "✓ pandoc is installed"
-
 # Clean target (Windows compatible)
 clean:
 	@if exist "$(DOCX_OUTPUT)" ($(RM) "$(DOCX_OUTPUT)" && $(ECHO) "Cleaned up generated files") else ($(ECHO) "No files to clean")
@@ -55,7 +39,6 @@ help:
 	@$(ECHO) "Available targets:"
 	@$(ECHO) "  all           - Convert markdown to Word"
 	@$(ECHO) "  docx          - Same as 'all'"
-	@$(ECHO) "  check-pandoc  - Verify pandoc is installed"
 	@$(ECHO) "  clean         - Remove generated files"
 	@$(ECHO) "  help          - Show this help message"
 	@$(ECHO).
