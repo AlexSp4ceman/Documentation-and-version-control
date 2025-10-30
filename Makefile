@@ -3,6 +3,7 @@
 # Variables
 MD_SOURCE := main.md
 DOCX_OUTPUT := article.docx
+REFERENCE_DOC := reference-doc.docx
 PANDOC := pandoc
 ECHO := echo
 
@@ -13,20 +14,16 @@ else
     RM := rm -f
 endif
 
-# Pandoc flags for Times New Roman 14pt, black text
+# Pandoc flags using reference document for formatting
 PANDOC_FLAGS := --standalone \
-                -V mainfont="Times New Roman" \
-                -V fontsize=14pt \
-                -V colorlinks=false \
-                -V linkcolor=black \
-                -V urlcolor=black
+                --reference-doc=$(REFERENCE_DOC)
 
 # Default target
 all: $(DOCX_OUTPUT)
 
 # Main conversion rule
-$(DOCX_OUTPUT): $(MD_SOURCE)
-	@$(ECHO) "Converting $(MD_SOURCE) to Word format..."
+$(DOCX_OUTPUT): $(MD_SOURCE) $(REFERENCE_DOC)
+	@$(ECHO) "Converting $(MD_SOURCE) to Word..."
 	$(PANDOC) $(PANDOC_FLAGS) -f markdown -t docx -o $@ $<
 	@$(ECHO) "Successfully created $(DOCX_OUTPUT)"
 
@@ -44,7 +41,7 @@ help:
 	@$(ECHO).
 
 # Phony targets
-.PHONY: all docx docx-preserve docx-custom check-pandoc clean help
+.PHONY: all docx clean help
 
 # Alias
 docx: $(DOCX_OUTPUT)
