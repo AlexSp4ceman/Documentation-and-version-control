@@ -35,7 +35,7 @@ clean:
 help:
 	@$(ECHO) "Available targets:"
 	@$(ECHO) "  all           - Convert markdown to Word"
-	@$(ECHO) "  docx          - Same as 'all'"
+# @$(ECHO) "  docx          - Same as 'all'"
 	@$(ECHO) "  clean         - Remove generated files"
 	@$(ECHO) "  help          - Show this help message"
 	@$(ECHO).
