@@ -1,11 +1,10 @@
 # Variables
 MD_SOURCE := main.md
 DOCX_OUTPUT := article.docx
-REFERENCE_DOC := reference-doc.docx
+REFERENCE_DOC := custom-reference-doc.docx
 
 OPTIONS = -d default.yaml \
 	--from=markdown \
-	--toc \
 	--citeproc \
 	--reference-doc=$(REFERENCE_DOC)
 
